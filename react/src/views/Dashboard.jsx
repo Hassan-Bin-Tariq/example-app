@@ -33,7 +33,7 @@ function Dashboard() {
       <Hero />
       <Homes />
       <Discover />
-      <button onClick={OpenNews}>OpenNews</button>
+      <button onClick={OpenNews}>OpenNewssss</button>
       <button onClick={Guardian}>The Guardian</button>
       <button onClick={NY}>NY</button>
     </div>
