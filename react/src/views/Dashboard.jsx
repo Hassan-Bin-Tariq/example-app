@@ -1,0 +1,43 @@
+import React from "react"
+import Discover from "./discover/Discover"
+import Hero from "./hero/Hero"
+import Homes from "./mainContent/homes/Home"
+import './Dashboard.css'
+function Dashboard() {
+  function OpenNews(){
+    fetch("http://localhost:8000/api/OpenNews")
+    .then(res => res.json()) // Convert the response to JSON
+    .then(data => console.log(data['articles'][0]))
+    .catch(error => {
+      console.error("Error:", error);
+    });
+  }
+  function Guardian(){
+    fetch("http://localhost:8000/api/Guardian")
+    .then(res => res.json()) // Convert the response to JSON
+    .then(data => console.log(data))
+    .catch(error => {
+      console.error("Error:", error);
+    });
+  }
+  function NY(){
+    fetch("http://localhost:8000/api/NYtimes")
+    .then(res => res.json()) // Convert the response to JSON
+    .then(data => console.log(data))
+    .catch(error => {
+      console.error("Error:", error);
+    });
+  }
+  return (
+    <div >
+      <Hero />
+      <Homes />
+      <Discover />
+      <button onClick={OpenNews}>OpenNews</button>
+      <button onClick={Guardian}>The Guardian</button>
+      <button onClick={NY}>NY</button>
+    </div>
+  )
+}
+
+export default Dashboard
