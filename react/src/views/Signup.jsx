@@ -19,6 +19,7 @@ export default function Signup() {
       email: emailRef.current.value,
       password: passwordRef.current.value,
       password_confirmation: passwordConfirmationRef.current.value,
+      preference: 'football',
     }
     console.log(payload)
     axiosClient.post('/signup', payload)

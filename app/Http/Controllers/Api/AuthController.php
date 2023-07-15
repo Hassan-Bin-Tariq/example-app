@@ -20,6 +20,7 @@ class AuthController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'preference' => $data['preference'],
         ]);
 
         $token = $user->createToken('main')->plainTextToken;
