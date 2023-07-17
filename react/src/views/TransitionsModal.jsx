@@ -51,12 +51,12 @@ const style = (theme) => ({
 
 export default function TransitionsModal({ onClose }) {
   const [open, setOpen] = useState(true);
-  const [buttonColors, setButtonColors] = useState(Array(5).fill('primary'));
+  const [buttonColors, setButtonColors] = useState(Array(11).fill('primary'));
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  var preferences = ['Sports','Politics','Games','Valorant','Technology','Sports']
+  var preferences = ['Sports','Politics','Games','Valorant','Technology','Computer Science','Photography','Health','Travel','Books','Yoga']
 
   const [clickedIndex, setClickedIndex] = useState(null);
 

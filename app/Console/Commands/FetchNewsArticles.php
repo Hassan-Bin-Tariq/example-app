@@ -16,7 +16,7 @@ class FetchNewsArticles extends Command
     public function handle()
     {
         $api_key = '862cf55bbcb44423b87f01ed706a9186';
-        $q = 'Sports';
+        $q = 'Yoga';
 
         $newsapi = new NewsApi($api_key);
         $all_articles = $newsapi->getEverything($q);
