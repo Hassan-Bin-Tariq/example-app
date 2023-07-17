@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use jcobhams\NewsApi\NewsApi;
 use App\Models\NewsArticle4;
+use App\Models\GuardianArticle;
 use Carbon\Carbon;
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +69,8 @@ Route::get('/OpenNews', function(){
     return response()->json($all_articles);
 });
 Route::get('/Guardian', function () {
-    $url = 'https://content.guardianapis.com/sections?api-key=21b5e4ab-7295-4da2-a0f4-785470416212';
+    $q = 'games';
+    $url = "https://content.guardianapis.com/search?q=" . urlencode($q) . "&api-key=21b5e4ab-7295-4da2-a0f4-785470416212";
 
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -77,6 +79,20 @@ Route::get('/Guardian', function () {
 
     if ($response !== false) {
         $result = json_decode($response, true);
+
+        // Loop through the results and insert each article into the table
+        foreach ($result['response']['results'] as $articleData) {
+            GuardianArticle::create([
+                'api_url' => $articleData['apiUrl'],
+                'pillarName' => $articleData['pillarName'],
+                'sectionId' => $articleData['sectionId'],
+                'sectionName' => $articleData['sectionName'],
+                'type' => $articleData['type'],
+                'webPublicationDate' => $articleData['webPublicationDate'],
+                'web_title' => $articleData['webTitle'],
+                'web_url' => $articleData['webUrl'],
+            ]);
+        }
 
         return response()->json($result);
     } else {
