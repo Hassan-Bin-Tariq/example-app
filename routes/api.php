@@ -5,6 +5,8 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use jcobhams\NewsApi\NewsApi;
+use App\Models\NewsArticle4;
+use Carbon\Carbon;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,13 +32,38 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/OpenNews', function(){
 
     $api_key = '862cf55bbcb44423b87f01ed706a9186';
-    $q = 'Bicoin'; // Your search query
-
+    $q = 'Sports'; // Your search query
 
     $newsapi = new NewsApi($api_key);
-
-    # /v2/everything
     $all_articles = $newsapi->getEverything($q);
+
+    $articles = $all_articles->articles;
+
+
+    foreach ($articles as $article) {
+        try {
+            NewsArticle4::create([
+                'title' => $article->title,
+                'author' => $article->author,
+                'content' => $article->content,
+                'published_at' => Carbon::parse($article->publishedAt)->toDateTimeString(),
+                'url' => $article->url,
+                'urlToImage' => $article->urlToImage,
+                'description' => $article->description,
+                'source' => $article->source->name,
+            ]);
+        } catch (\Illuminate\Database\QueryException $exception) {
+            // Handle duplicate entry error
+            if ($exception->getCode() === '23000') {
+                // Duplicate entry, skip or update existing record
+                continue;
+            } else {
+                // Other database-related error, handle accordingly
+                throw $exception;
+            }
+        }
+    
+    }
 
     return response()->json($all_articles);
 });

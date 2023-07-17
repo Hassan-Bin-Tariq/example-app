@@ -27,7 +27,7 @@ function Dashboard() {
   function OpenNews(){
     fetch("http://localhost:8000/api/OpenNews")
     .then(res => res.json()) // Convert the response to JSON
-    .then(data => console.log(data['articles'][0]))
+    .then(data => console.log(data))
     .catch(error => {
       console.error("Error:", error);
     });
