@@ -48,6 +48,14 @@ function Dashboard() {
       console.error("Error:", error);
     });
   }
+  function NY(){
+    fetch("http://localhost:8000/api/clear")
+    .then(res => res.json()) // Convert the response to JSON
+    .then(data => console.log(data))
+    .catch(error => {
+      console.error("Error:", error);
+    });
+  }
   return (
     <div >
       <Hero />
@@ -55,7 +63,7 @@ function Dashboard() {
       <Discover />
       <button onClick={OpenNews}>OpenNewssss</button>
       <button onClick={Guardian}>The Guardian</button>
-      <button onClick={NY}>NY</button>
+      <button onClick={NY}>clear</button>
     </div>
   )
 }

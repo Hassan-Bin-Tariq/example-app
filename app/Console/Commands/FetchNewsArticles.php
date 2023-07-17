@@ -7,6 +7,7 @@ use Illuminate\Support\Carbon;
 use jcobhams\NewsApi\NewsApi;
 use App\Models\NewsArticle4;
 use App\Models\GuardianArticle;
+use App\Models\NytimesArticle;
 class FetchNewsArticles extends Command
 {
     protected $signature = 'news:fetch';
@@ -93,6 +94,66 @@ class FetchNewsArticles extends Command
 
                 // return response()->json(['error' => 'Request failed'], 500);
             }
+
+            //NEW YORK TIMES NEWS DATA GATHER
+
+            $url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=". urlencode($q) . "&api-key=xSPDwViGyrhvm4PVq3FjZEiSM609isY9";
+
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($curl);
+            curl_close($curl);
+        
+            if ($response !== false) {
+                $result = json_decode($response, true);
+        
+                // Check if 'docs' key exists in the response
+                if (isset($result['response']['docs'])) {
+                    $articles = $result['response']['docs'];
+        
+                    // Loop through the articles and insert each one into the table
+                    foreach ($articles as $articleData) {
+        
+                        $abstract = $articleData['abstract'];
+        
+                        // Check if an article with the same abstract already exists
+                        $existingArticle = NytimesArticle::where('abstract', $abstract)->exists();
+        
+                        if ($existingArticle) {
+                            continue; // Skip inserting this article
+                        }
+        
+                        $abstract = $articleData['abstract'];
+                        $webUrl = $articleData['web_url'];
+                        $snippet = $articleData['snippet'];
+                        $leadParagraph = $articleData['lead_paragraph'];
+                        $printSection = isset($articleData['print_section']) ? $articleData['print_section'] : '';
+                        $source = $articleData['source'];
+                        $publishDate = isset($articleData['pub_date']) ? $articleData['pub_date'] : '';
+                        $author = isset($articleData['byline']['original']) ? $articleData['byline']['original'] : '';
+        
+                        NytimesArticle::create([
+                            'abstract' => $abstract,
+                            'web_url' => $webUrl,
+                            'snippet' => $snippet,
+                            'lead_paragraph' => $leadParagraph,
+                            'print_section' => $printSection,
+                            'source' => $source,
+                            'Publish_date' => $publishDate,
+                            'Author' => $author,
+                            // Add other fields as needed
+                        ]);
+                    }
+                }
+        
+                // return response()->json($result);
+            } else {
+                echo 'Request failed';
+        
+                // return response()->json(['error' => 'Request failed'], 500);
+            }
+
+
         }
 
         $this->info('News articles fetched and stored successfully!');

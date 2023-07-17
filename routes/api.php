@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Route;
 use jcobhams\NewsApi\NewsApi;
 use App\Models\NewsArticle4;
 use App\Models\GuardianArticle;
+use App\Models\NytimesArticle;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -101,9 +103,9 @@ Route::get('/Guardian', function () {
         return response()->json(['error' => 'Request failed'], 500);
     }
 });
-
 Route::get('/NYtimes', function () {
-    $url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=cricket&api-key=xSPDwViGyrhvm4PVq3FjZEiSM609isY9';
+    // DB::table('news_articles4')->truncate();
+    $url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=sports&api-key=xSPDwViGyrhvm4PVq3FjZEiSM609isY9';
 
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -113,10 +115,54 @@ Route::get('/NYtimes', function () {
     if ($response !== false) {
         $result = json_decode($response, true);
 
+        // Check if 'docs' key exists in the response
+        if (isset($result['response']['docs'])) {
+            $articles = $result['response']['docs'];
+
+            // Loop through the articles and insert each one into the table
+            foreach ($articles as $articleData) {
+
+                $abstract = $articleData['abstract'];
+
+                // Check if an article with the same abstract already exists
+                $existingArticle = NytimesArticle::where('abstract', $abstract)->exists();
+
+                if ($existingArticle) {
+                    continue; // Skip inserting this article
+                }
+
+                $abstract = $articleData['abstract'];
+                $webUrl = $articleData['web_url'];
+                $snippet = $articleData['snippet'];
+                $leadParagraph = $articleData['lead_paragraph'];
+                $printSection = isset($articleData['print_section']) ? $articleData['print_section'] : '';
+                $source = $articleData['source'];
+                $publishDate = isset($articleData['pub_date']) ? $articleData['pub_date'] : '';
+                $author = isset($articleData['byline']['original']) ? $articleData['byline']['original'] : '';
+
+                NytimesArticle::create([
+                    'abstract' => $abstract,
+                    'web_url' => $webUrl,
+                    'snippet' => $snippet,
+                    'lead_paragraph' => $leadParagraph,
+                    'print_section' => $printSection,
+                    'source' => $source,
+                    'Publish_date' => $publishDate,
+                    'Author' => $author,
+                    // Add other fields as needed
+                ]);
+            }
+        }
+
         return response()->json($result);
     } else {
         echo 'Request failed';
 
         return response()->json(['error' => 'Request failed'], 500);
     }
+});
+Route::get('/clear', function () {
+    DB::table('news_articles4')->truncate();
+    DB::table('guardian_articles')->truncate();
+    DB::table('nytimes_articles')->truncate();
 });
