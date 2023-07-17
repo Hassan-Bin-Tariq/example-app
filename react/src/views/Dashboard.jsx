@@ -4,25 +4,9 @@ import Hero from "./hero/Hero"
 import Homes from "./mainContent/homes/Home"
 import {useEffect, useState} from "react";
 import './Dashboard.css'
-import axiosClient from "../axios-client.js";
-function Dashboard() {
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    getUsers();
-  }, [])
 
-  const getUsers = () => {
-    setLoading(true)
-    axiosClient.get('/users')
-      .then(({ data }) => {
-        console.log(data)
-        setLoading(false)
-        setUsers(data.data)
-      })
-      .catch(() => {
-        setLoading(false)
-      })
-  }
+import {useStateContext} from "../contexts/ContextProvider.jsx";
+function Dashboard() {
 
   function OpenNews(){
     fetch("http://localhost:8000/api/OpenNews")
