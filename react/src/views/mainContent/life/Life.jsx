@@ -2,7 +2,6 @@ import React from "react"
 import Slider from "react-slick"
 import { lifestyle } from "../../../../dummyData"
 import Heading from "../../../common/heading/Heading"
-
 import "../Ppost/ppost.css"
 //copy ppost code
 const Life = () => {

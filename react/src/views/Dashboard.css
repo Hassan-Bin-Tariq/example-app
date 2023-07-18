@@ -101,14 +101,14 @@ a {
 .comment label,
 .date label {
   font-size: 13px;
-  color: #868585;
+  color: #a62222;
 }
 .desc {
   font-size: 13px;
   margin: 10px 0;
 }
 .shadow {
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 15px 10px -10px;
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 15px 10px -10px;
 }
 
 /*-----------global-----------*/

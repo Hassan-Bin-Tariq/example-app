@@ -19,7 +19,7 @@ const Card = ({ item }) => {
         <div class="details">
           <h2 className="title">{item.title ? item.title : item.web_title}<br /><span className="auth">by {item.author?item.author : item.sectionName}</span></h2>
           <h5>
-            {item.published_at ? item.published_at : item.webPublicationDate.substring(0, 10)}
+            {item.published_at ? item.published_at.substring(0, 10) : item.webPublicationDate.substring(0, 10)}
             <br />
           </h5>
           <div class="data">

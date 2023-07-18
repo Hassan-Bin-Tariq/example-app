@@ -4,6 +4,7 @@
 }
 .music .text {
   padding: 0 30px;
+  color: rgb(255, 255, 255);
 }
 .music .images {
   width: 320px;
@@ -16,6 +17,7 @@
 }
 .music h1 {
   font-size: 22px;
+  color: rgb(186, 186, 186);
 }
 @media screen and (max-width: 768px) {
   .music img,

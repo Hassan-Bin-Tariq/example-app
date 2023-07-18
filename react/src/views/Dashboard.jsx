@@ -2,7 +2,7 @@ import React from "react"
 import Discover from "./discover/Discover"
 import Hero from "./hero/Hero"
 import Homes from "./mainContent/homes/Home"
-
+import Footer from "../common/footer/Footer"
 
 import './Dashboard.css'
 
@@ -46,6 +46,7 @@ function Dashboard() {
       <Hero />
       <Homes />
       <Discover />
+      <Footer/>
       {/* <button onClick={OpenNews}>OpenNewssss</button>
       <button onClick={Guardian}>The Guardian</button>
       <button onClick={clear}>clear</button> */}
