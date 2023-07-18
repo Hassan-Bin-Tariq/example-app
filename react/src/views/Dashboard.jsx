@@ -2,7 +2,7 @@ import React from "react"
 import Discover from "./discover/Discover"
 import Hero from "./hero/Hero"
 import Homes from "./mainContent/homes/Home"
-import Search from "../components/search"
+
 
 import './Dashboard.css'
 
@@ -46,9 +46,9 @@ function Dashboard() {
       <Hero />
       <Homes />
       <Discover />
-      <button onClick={OpenNews}>OpenNewssss</button>
+      {/* <button onClick={OpenNews}>OpenNewssss</button>
       <button onClick={Guardian}>The Guardian</button>
-      <button onClick={clear}>clear</button>
+      <button onClick={clear}>clear</button> */}
     </div>
   )
 }

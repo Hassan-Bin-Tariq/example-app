@@ -17,21 +17,22 @@ export default function DefaultLayout() {
     }
 
     const onLogout = ev => {
-        ev.preventDefault()
-    
+        // ev.preventDefault()
+      console.log("hassan")
         axiosClient.post('/logout')
           .then(() => {
             setUser({})
             setToken(null)
+              // to='/login'
           })
       }
     
-      useEffect(() => {
-        axiosClient.get('/user')
-          .then(({data}) => {
-             setUser(data)
-          })
-      }, [])
+      // useEffect(() => {
+      //   axiosClient.get('/user')
+      //     .then(({data}) => {
+      //        setUser(data)
+      //     })
+      // }, [])
     return(
         <div >
             {/* <aside>

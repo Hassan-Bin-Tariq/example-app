@@ -14,7 +14,6 @@ import { Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/mate
 
 
 const Hero = () => {
-  const [items, setIems] = useState(hero)
   const { setUser} = useStateContext();
   const [nytimesArticles, setNytimesArticles] = useState([]);
   const [guardianArticles, setguardianArticles] = useState([]);
@@ -124,6 +123,7 @@ const Hero = () => {
             <div className="search">
               <TextField
                 id="outlined-basic"
+                autoComplete="off"
                 onChange={inputHandler}
                 onKeyPress={handleEnterKeyPress}
                 variant="outlined"
