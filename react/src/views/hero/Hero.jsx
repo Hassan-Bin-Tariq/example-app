@@ -93,8 +93,9 @@ const Hero = () => {
   };
 
   function fetchSearchData (){
+    console.log(inputText)
     axios
-      .post("http://localhost:8000/api/GetPreferedArticle", ["yoga"])
+      .post("http://localhost:8000/api/search", inputText)
       .then((response) => {
         console.log(response.data);
         setnewsArticles(response.data["newsArticles"]); // Update searchResult state
