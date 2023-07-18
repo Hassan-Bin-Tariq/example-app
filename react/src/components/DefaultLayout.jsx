@@ -57,8 +57,9 @@ export default function DefaultLayout() {
                 <Link to='/memes'>Memes</Link>
               </li>
               {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
-              <div className='userData'style={{ float: 'right' }}>
-                <p className="title">{<Avatar alt="Remy Sharp" src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg" />}<p className="auth">{user.name}</p></p>
+              {/* <p className="auth">{user.name}</p> */}
+              <div className='userData'>
+                <p className="title">{<Avatar alt="Remy Sharp" src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg" />}</p>
  
 
                 </div>

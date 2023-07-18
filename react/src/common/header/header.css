@@ -6,7 +6,7 @@
 .userData {
   /* display: flex; */
   /* align-items: center; */
-  margin-left: 800px;
+  margin-left: 700px;
 }
 
 
@@ -20,6 +20,7 @@
 header {
   background-color: #000;
   color: #ffffff;
+  height: 80px;
 }
 header li {
   margin-right: 30px;

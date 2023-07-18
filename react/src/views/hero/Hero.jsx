@@ -6,6 +6,10 @@ import {useEffect} from "react";
 import axiosClient from "../../axios-client";
 import {useStateContext} from "../../contexts/ContextProvider";
 import axios from "axios";
+import Search from "../../components/search"
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import { BsSearch } from "react-icons/bs";
 import { Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 
 
@@ -15,6 +19,9 @@ const Hero = () => {
   const [nytimesArticles, setNytimesArticles] = useState([]);
   const [guardianArticles, setguardianArticles] = useState([]);
   const [newsArticles, setnewsArticles] = useState([]);
+  const [inputText, setInputText] = useState("");
+
+
   useEffect(() => {
     axiosClient.get('/user')
       .then(({data}) => {
@@ -22,7 +29,7 @@ const Hero = () => {
          console.log(data['preference'])
          const array = data['preference'].split(",");
          // Make another API call and send the user data back to the backend
-          axios.post('http://localhost:8000/api/GetPreferedArticle', array) // Assuming your Laravel API endpoint for saving the user data is '/api/save-user'
+          axios.post('http://localhost:8000/api/GetPreferedArticle', array) 
           .then(response => {
             console.log(response.data);
             setNytimesArticles(response.data['nytimesArticles']);
@@ -45,10 +52,6 @@ const Hero = () => {
       const rowItems = newsArticles
         .slice(rowIndex, rowIndex + cardsPerRow)
         .map((item) => {
-          // if (!item.urlToImage || !item.author) {
-          //   return null; // Skip the post if urlToImage or author is missing
-          // }
-  
           return (
             <TableCell key={item.id}>
               <Card item={item} />
@@ -67,10 +70,6 @@ const Hero = () => {
       const rowItems = guardianArticles
         .slice(rowIndex2, rowIndex2 + cardsPerRow)
         .map((item) => {
-          // if (!item.urlToImage || !item.author) {
-          //   return null; // Skip the post if urlToImage or author is missing
-          // }
-  
           return (
             <TableCell key={item.id}>
               <Card item={item} />
@@ -88,11 +87,57 @@ const Hero = () => {
     return rows;
   };
   
-  
-  
+  const inputHandler = (e) => {
+    var lowerCase = e.target.value.toLowerCase();
+    setInputText(lowerCase);
+  };
+
+  function fetchSearchData (){
+    axios
+      .post("http://localhost:8000/api/GetPreferedArticle", ["yoga"])
+      .then((response) => {
+        console.log(response.data);
+        setnewsArticles(response.data["newsArticles"]); // Update searchResult state
+        setguardianArticles(response.data["guardianArticles"]);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+  const handleSearchClick = () => {
+    console.log("Search icon clicked");
+    fetchSearchData ();
+  };
+
+  const handleEnterKeyPress = (e) => {
+    if (e.key === "Enter") {
+      console.log("Enter key pressed");
+      fetchSearchData ();
+    }
+  };
+
   
   return (
     <section className="hero">
+      <div className="main">
+            <div className="search">
+              <TextField
+                id="outlined-basic"
+                onChange={inputHandler}
+                onKeyPress={handleEnterKeyPress}
+                variant="outlined"
+                fullWidth
+                label="Search"
+                InputProps={{
+                  endAdornment: (
+                    <IconButton onClick={handleSearchClick}>
+                      <BsSearch size={15} color="red" />
+                    </IconButton>
+                  ),
+                }}
+              />
+            </div>
+        </div>
       <TableContainer>
         <Table>
           <TableBody>
