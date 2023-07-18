@@ -1,23 +1,39 @@
 .head {
   cursor: pointer;
+  
 }
+
+.userData {
+  /* display: flex; */
+  /* align-items: center; */
+  margin-left: 800px;
+}
+
+
+.btn-logout {
+  margin-left: auto;
+}
+
 .head .logo img {
   width: 500px;
 }
 header {
   background-color: #000;
-  color: #fff;
+  color: #ffffff;
 }
 header li {
   margin-right: 30px;
   transition: 0.5s;
 }
 header li:hover {
-  color: crimson;
+  color: rgb(255, 255, 255);
   cursor: pointer;
 }
 header a {
-  color: #fff;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: larger;
+
 }
 .barIcon {
   font-size: 25px;

@@ -2,10 +2,9 @@ import React from "react"
 import Discover from "./discover/Discover"
 import Hero from "./hero/Hero"
 import Homes from "./mainContent/homes/Home"
-import {useEffect, useState} from "react";
+
 import './Dashboard.css'
 
-import {useStateContext} from "../contexts/ContextProvider.jsx";
 function Dashboard() {
 
   function OpenNews(){
@@ -32,7 +31,7 @@ function Dashboard() {
       console.error("Error:", error);
     });
   }
-  function NY(){
+  function clear(){
     fetch("http://localhost:8000/api/clear")
     .then(res => res.json()) // Convert the response to JSON
     .then(data => console.log(data))
@@ -42,12 +41,13 @@ function Dashboard() {
   }
   return (
     <div >
+
       <Hero />
       <Homes />
       <Discover />
       <button onClick={OpenNews}>OpenNewssss</button>
       <button onClick={Guardian}>The Guardian</button>
-      <button onClick={NY}>clear</button>
+      <button onClick={clear}>clear</button>
     </div>
   )
 }

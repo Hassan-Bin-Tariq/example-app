@@ -41,7 +41,7 @@ const Hero = () => {
     const totalCards = 21;
     let rowIndex = 0;
   
-    while (rowIndex < totalCards) {
+    while (rowIndex < totalCards+10) {
       const rowItems = newsArticles
         .slice(rowIndex, rowIndex + cardsPerRow)
         .map((item) => {
@@ -61,6 +61,28 @@ const Hero = () => {
       }
   
       rowIndex += cardsPerRow;
+    }
+    let rowIndex2 = 0;
+    while (rowIndex2 < totalCards-10) {
+      const rowItems = guardianArticles
+        .slice(rowIndex2, rowIndex2 + cardsPerRow)
+        .map((item) => {
+          // if (!item.urlToImage || !item.author) {
+          //   return null; // Skip the post if urlToImage or author is missing
+          // }
+  
+          return (
+            <TableCell key={item.id}>
+              <Card item={item} />
+            </TableCell>
+          );
+        });
+  
+      if (rowItems.some((item) => item !== null)) {
+        rows.push(<TableRow key={rowIndex2}>{rowItems}</TableRow>);
+      }
+  
+      rowIndex2 += cardsPerRow;
     }
   
     return rows;

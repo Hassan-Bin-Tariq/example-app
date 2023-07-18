@@ -198,7 +198,5 @@ Route::get('/NYtimes', function () {
     }
 });
 Route::get('/clear', function () {
-    DB::table('news_articles4')->truncate();
-    DB::table('guardian_articles')->truncate();
-    DB::table('nytimes_articles')->truncate();
+    NewsArticle4::whereNull('urlToImage')->delete();
 });
