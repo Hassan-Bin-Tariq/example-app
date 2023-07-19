@@ -89,9 +89,9 @@ export default function TransitionsModal({ onClose }) {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <h2 id="transition-modal-title">Text in a modal</h2>
+            <h2 id="transition-modal-title">Select Topics</h2>
             <span id="transition-modal-description" style={{ marginTop: 16 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              Your feed will be on the basis of selected topics
             </span>
             <div style={{ marginTop: 16 }}>
             {buttonColors.map((color, index) => (
@@ -110,7 +110,7 @@ export default function TransitionsModal({ onClose }) {
             ))}
             </div>
             <button className="custom-button" variant="contained" color="primary" onClick={handleHideModal} style={{ backgroundColor: '#323e40',marginTop: 16 }}>
-              Hide Modal
+              close
             </button>
           </Box>
         </Fade>

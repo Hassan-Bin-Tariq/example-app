@@ -1,0 +1,27 @@
+version: '3'
+services:
+  laravel:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8000:8000
+    depends_on:
+      - database
+
+  react:
+    build:
+      context: ./react
+      dockerfile: Dockerfile
+    volumes:
+      - ./react:/usr/src/app
+    ports:
+      - 3000:3000
+    entrypoint: ["npm", "install"]  # <-- Add the entrypoint here to run "npm install" in the React service
+
+  database:
+    image: bitnami/minideb:buster
+    volumes:
+      - ./php/example-app/database:/var/www/html/database
