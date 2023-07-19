@@ -3,6 +3,7 @@ import Discover from "./discover/Discover"
 import Hero from "./hero/Hero"
 import Homes from "./mainContent/homes/Home"
 import Footer from "../common/footer/Footer"
+import Calendar  from "../components/Calender"
 
 import './Dashboard.css'
 
@@ -47,6 +48,7 @@ function Dashboard() {
       <Homes />
       <Discover />
       <Footer/>
+      <Calendar/>
       {/* <button onClick={OpenNews}>OpenNewssss</button>
       <button onClick={Guardian}>The Guardian</button>
       <button onClick={clear}>clear</button> */}
