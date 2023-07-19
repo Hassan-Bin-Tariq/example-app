@@ -16,6 +16,7 @@ import SimpleModal from "../../components/SimpleModal"
 var startDate;
 var endDate ;
 var articleSource;
+var checks = 0;
 const Hero = () => {
   const { setUser} = useStateContext();
   const [nytimesArticles, setNytimesArticles] = useState([]);
@@ -52,8 +53,11 @@ const Hero = () => {
     const cardsPerRow = 3;
     const totalCards = 21;
     let rowIndex = 0;
-
-    if(showFilter === false)
+    // startDate = null;
+    // endDate = null;
+    // articleSource = null;
+    console.log(showFilter);
+    if(showFilter === false || checks === 1)  
     {
         while (rowIndex < totalCards+10) {
           const rowItems = newsArticles
@@ -93,7 +97,7 @@ const Hero = () => {
     }
     else if (showFilter === true)
     {
-
+            //console.log("inside filter")
             while (rowIndex < totalCards + 10) {
               const rowItems = newsArticles
                 .slice(rowIndex, rowIndex + cardsPerRow)
@@ -102,8 +106,16 @@ const Hero = () => {
                   var startDateObj = new Date(startDate);
                   var endDateObj = new Date(endDate);
                   var publishedAtObj = new Date(item.published_at || item.webPublicationDate);
+                  //console.log(startDateObj,endDateObj,publishedAtObj)
                   //const itemDate = new Date(item.published_at || item.webPublicationDate);
-                  return publishedAtObj >= startDateObj && publishedAtObj <= endDateObj || (!articleSource || item.source === articleSource);
+                  if(publishedAtObj >= startDateObj && publishedAtObj <= endDateObj){
+                    //console.log("TRUE");
+                    //console.l
+                  }
+                  if(item.source === articleSource){
+                    console.log('soure matc')
+                  }
+                  return publishedAtObj >= startDateObj && publishedAtObj <= endDateObj || (articleSource === 'undefined' || item.source === articleSource);
                 })
                 .map((item) => {
                   return (
@@ -156,13 +168,18 @@ const Hero = () => {
   };
 
   function fetchSearchData (){
-    console.log(inputText)
+    //console.log(inputText)
+ 
     axios
       .post("http://localhost:8000/api/search", inputText)
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         setnewsArticles(response.data["newsArticles"]); 
         setguardianArticles(response.data["guardianArticles"]);
+        setFilter(false);
+
+
+        checks = 1;
       })
       .catch((error) => {
         console.error(error);
@@ -205,7 +222,7 @@ const Hero = () => {
   const handleSourceChange = (Source) => {
 
     if(Source){
-      console.log(Source)
+      //console.log(Source)
       articleSource = Source
       setFilter(true);
     }
